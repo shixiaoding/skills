@@ -1,0 +1,42 @@
+{
+  "name": "@helloxiaoding/ding-skills",
+  "version": "0.1.0",
+  "description": "小鼎 Skills 的跨 Agent 安装工具。",
+  "type": "module",
+  "bin": {
+    "ding-skills": "bin/ding-skills.mjs"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "skills/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "agent-skills",
+    "codex",
+    "claude-code",
+    "qoder",
+    "skills"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shixiaoding/skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shixiaoding/skills/issues"
+  },
+  "homepage": "https://github.com/shixiaoding/skills#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

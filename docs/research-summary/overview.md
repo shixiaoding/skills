@@ -1,12 +1,11 @@
-# Research Summary Skills（资料收集总结 Skill 套件）
+# research-summary 概览
 
-自动化资料收集工作流：搜索资料 → 分类整理 → 生成结构化 Markdown → 同步 Notion → 输出摘要。
+自动化资料收集工作流：搜索资料 → 分类整理 → 生成结构化 Markdown → 按需同步 Notion → 输出摘要。
 
 ## 目录结构
 
 ```
-research-summary-skills/
-└── research-summary/
+skills/research-summary/
     ├── SKILL.md              # Skill 定义（意图识别、执行流程、输出格式）
     ├── assets/
     │   └── template.md       # 文档生成骨架模板
@@ -16,17 +15,14 @@ research-summary-skills/
 
 ## 安装
 
-将 Skill 目录复制到对应 Agent 工具的 skills 目录即可。以 Claude Code 和 Codex 为例：
+推荐使用 npm 安装工具：
 
 ```bash
-# Claude Code
-mkdir -p ~/.claude/skills
-cp -R research-summary ~/.claude/skills/
-
 # Codex
-mkdir -p ~/.codex/skills
-cp -R research-summary ~/.codex/skills/
+npx @helloxiaoding/ding-skills install research-summary --agent codex
 ```
+
+完整安装方式见 [小鼎 Skills 安装手册](../installation.md)。
 
 ## 使用方式
 
@@ -46,5 +42,5 @@ cp -R research-summary ~/.codex/skills/
 
 ## 依赖
 
-- **Notion MCP 插件**（`makenotion/claude-code-notion-plugin`）：同步文档到 Notion
+- **Notion MCP 插件**（可选）：用户要求同步文档到 Notion 时使用
 - **WebSearch / WebFetch**：资料搜索与链接验证

@@ -2,14 +2,14 @@
 
 ## 这个技能是干什么的？
 
-一句话：**你说一个主题，AI 帮你搜资料、分类整理、生成文档、同步到 Notion。**
+一句话：**你说一个主题，AI 帮你搜资料、分类整理、生成文档，并可按需同步到 Notion。**
 
 比如你说"帮我收集 RAG 大厂实践资料"，它会：
 
 1. 自动搜索官方文档、大厂文章、GitHub 项目、社区帖子
 2. 按可信度分级整理成表格
 3. 生成一份结构化 Markdown 文档
-4. 同步到你的 Notion 里
+4. 你明确要求时，同步到你的 Notion 里
 
 你不用自己一篇篇翻、复制粘贴、整理格式——AI 全搞定。
 
@@ -21,12 +21,12 @@
 
 | 依赖 | 是什么 | 怎么装 |
 |---|---|---|
-| **Notion MCP 插件** | 让 AI 能读写你的 Notion | 见下方步骤 |
-| **WebSearch / WebFetch** | 让 AI 能搜索网页 | Claude Code 自带，无需额外安装 |
+| **Notion MCP 插件**（可选） | 用户要求同步到 Notion 时，让 AI 能读写你的 Notion | 见下方步骤 |
+| **网页搜索能力** | 让 AI 能搜索网页 | 取决于所用 Agent 的工具配置 |
 
 ### 安装 Notion MCP 插件
 
-这一步是**必须的**，否则 skill 搜完资料没法同步到 Notion。
+仅当你需要同步到 Notion 时才需要这一步。未配置 Notion 时，Skill 仍可收集资料并生成 Markdown。
 
 **Claude Code 用户：**
 
@@ -65,45 +65,15 @@ args = ["-y", "@anthropic-ai/claude-code-notion-plugin"]
 
 ## 安装 Skill
 
-### Claude Code 安装方式
-
 ```bash
-# 1. 克隆项目
-git clone https://github.com/shixiaoding/personal-agent-skills.git
+# Codex
+npx @helloxiaoding/ding-skills install research-summary --agent codex
 
-# 2. 创建 skills 目录（如果没有的话）
-mkdir -p ~/.claude/skills
-
-# 3. 把 skill 复制进去
-cp -R personal-agent-skills/research-summary-skills/research-summary ~/.claude/skills/
+# Claude Code
+npx @helloxiaoding/ding-skills install research-summary --agent claude-code
 ```
 
-装完后目录结构应该是：
-
-```
-~/.claude/skills/
-└── research-summary/
-    ├── SKILL.md
-    ├── assets/
-    │   └── template.md
-    └── references/
-        └── specs.md
-```
-
-### Codex 安装方式
-
-```bash
-# 1. 克隆项目（如果上面已经克隆过，跳过这步）
-git clone https://github.com/shixiaoding/personal-agent-skills.git
-
-# 2. 创建 skills 目录
-mkdir -p ~/.codex/skills
-
-# 3. 把 skill 复制进去
-cp -R personal-agent-skills/research-summary-skills/research-summary ~/.codex/skills/
-```
-
-> **注意：** Codex 的 skills 目录是 `~/.codex/skills`，不是 `~/.claude/skills`。
+Qoder CLI、QoderWork、覆盖已有 Skill 和手动复制安装方式见 [小鼎 Skills 安装手册](../installation.md)。
 
 ---
 
@@ -125,7 +95,7 @@ cp -R personal-agent-skills/research-summary-skills/research-summary ~/.codex/sk
 2. 搜索官方文档 → 大厂文章 → GitHub 项目 → 社区帖子
 3. 按分类整理成表格（每条资料带可信度、推荐程度、链接）
 4. 生成 Markdown 文档
-5. 同步到你的 Notion
+5. 如果你明确要求且已配置服务，同步到你的 Notion
 6. 输出摘要（新增了多少资料、哪些链接失效等）
 
 **其他类似说法：**
@@ -149,7 +119,7 @@ cp -R personal-agent-skills/research-summary-skills/research-summary ~/.codex/sk
 1. 保留旧版文档不动
 2. 只搜索新增的资料
 3. 生成一份新版本（v2）
-4. 创建新的 Notion 页面
+4. 如果你明确要求且已配置服务，创建新的 Notion 页面
 5. 输出版本差异摘要
 
 **其他类似说法：**
@@ -172,7 +142,7 @@ cp -R personal-agent-skills/research-summary-skills/research-summary ~/.codex/sk
 
 1. 只修改你指定的章节
 2. 其他章节不动
-3. 更新 Notion 页面
+3. 如果你明确要求且已配置服务，更新 Notion 页面
 4. 输出修改摘要
 
 **其他类似说法：**
@@ -195,7 +165,7 @@ cp -R personal-agent-skills/research-summary-skills/research-summary ~/.codex/sk
 1. 不改文档结构
 2. 只搜索新增资料，补充到表格里
 3. 检查旧链接是否还有效
-4. 更新 Notion 页面的资料表部分
+4. 如果你明确要求且已配置服务，更新 Notion 页面的资料表部分
 
 **其他类似说法：**
 
@@ -280,9 +250,9 @@ claude mcp add notion -- npx -y @anthropic-ai/claude-code-notion-plugin
 **第二步：装 Skill**
 
 ```bash
-git clone https://github.com/shixiaoding/personal-agent-skills.git
+git clone https://github.com/shixiaoding/skills.git shixiaoding-skills
 mkdir -p ~/.claude/skills  # Codex 用 ~/.codex/skills
-cp -R personal-agent-skills/research-summary-skills/research-summary ~/.claude/skills/
+cp -R shixiaoding-skills/skills/research-summary ~/.claude/skills/
 ```
 
 **第三步：直接用**

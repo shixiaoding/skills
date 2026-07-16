@@ -1,83 +1,112 @@
-# Personal Agent Skills
+# Skills
 
-个人 AI Agent 技能库，为 AI Agent 工具（Claude Code、Codex 等）提供可复用的自动化工作流技能。
+个人可复用的 AI Skills 与工作流库。
 
-## 已收录技能
+这里沉淀的是已经在真实学习、研究、写作和知识管理场景中验证过的方法。每个 Skill 都应足够小，能够独立安装、理解和调整，而不是把整个个人工作系统塞进一份超长提示词。
 
-### research-summary — 资料收集总结
+## 当前 Skills
 
-自动完成「搜索资料 → 分类整理 → 生成结构化 Markdown → 同步 Notion → 输出摘要」全流程。
+| Skill | 解决的问题 | 可选集成 |
+| --- | --- | --- |
+| [research-summary](skills/research-summary) | 围绕一个主题收集、分级整理并持续维护资料库 | Notion 同步 |
+| [study-examiner](skills/study-examiner) | 对已阅读材料做一题一答测验，检验吸收程度并补弱 | - |
 
-**触发方式：**
+## 快速开始
 
-```text
-帮我收集 OpenSpec 大厂实践资料，生成 md 并同步到 Notion
+推荐使用 npm 安装工具，将 Skill 安装到已登录 Agent 的用户级目录：
+
+```bash
+# 查看可用 Skill
+npx @helloxiaoding/ding-skills list
+
+# 安装一个 Skill 到 Codex
+npx @helloxiaoding/ding-skills install study-examiner --agent codex
+
+# 将全部 Skill 安装到 Claude Code
+npx @helloxiaoding/ding-skills install --all --agent claude-code
 ```
 
-**支持四种工作模式：**
+支持 Codex、Claude Code、Qoder CLI 和 QoderWork。完整命令、覆盖规则和故障处理见 [安装手册](https://github.com/shixiaoding/skills/blob/main/docs/installation.md)。
 
-| 模式 | 触发示例 | 说明 |
-|---|---|---|
-| 首次收集 | `帮我收集 xxx 资料` | 全量搜索，创建新文档 |
-| 新版本 | `基于上一版生成 v2，不要覆盖` | 旧版保留，增量补充后创建新版 |
-| 修改当前文档 | `直接改这份，第 3 章重写` | 定点修改指定章节 |
-| 资料库更新 | `这版确认了，后续只更新资料库` | 结构不动，只维护资料表 |
+没有 Node.js 时，仍可克隆仓库后，将 `skills/<skill-name>/` 手动复制到所用 Agent 的 skills 目录。
 
-**文档结构：** 文档定位 → 主题概念 → 学习路径 → 官方/大厂/社区/国外资料库 → 工具链生态 → 待验证资料 → 采用策略 → 维护规则
+## 使用示例
 
-**输出示例：**
-- [Superpowers + OpenSpec 组合实践资料库](https://www.notion.so/Superpowers-OpenSpec-3679fce202f28157ae7aded0838e7dab)
-- [OpenSpec 全量大厂与开源社区资料库 v3](https://www.notion.so/OpenSpec-v3-3679fce202f2815fbb59f7ed4b5df0ae)
+安装 `research-summary` 后，可以直接说：
+
+```text
+帮我收集 MCP 协议相关的学习资料，生成结构化 Markdown。
+```
+
+如果希望同步到 Notion，需在请求中明确说明，并事先配置可用的 Notion MCP 服务：
+
+```text
+帮我收集 MCP 协议相关的学习资料，生成结构化 Markdown 并同步到 Notion。
+```
+
+更多说明见 [research-summary 使用教程](docs/research-summary/usage.md)。
+
+安装 `study-examiner` 后，在完成一段阅读或学习后，可以直接说：
+
+```text
+我已阅读完成，请一题一答测验我，最后再统一讲解和补弱。
+```
+
+它会先围绕已提供的材料或明确主题进行测验；答题过程中不提前批改，全部答完后再统一复盘薄弱点。
+更多说明见 [study-examiner 使用教程](docs/study-examiner/usage.md)。
 
 ## 目录结构
 
-```
-personal-agent-skills/
-└── research-summary-skills/          # 资料收集总结 Skill 套件
-    ├── README.md                     # 套件说明
-    └── research-summary/
-        ├── SKILL.md                  # Skill 定义（意图识别、执行流程、输出格式）
-        ├── assets/
-        │   └── template.md           # 文档生成骨架模板
-        └── references/
-            └── specs.md              # 参考规范（字段定义、可信度分级、Notion 同步规则）
-```
-
-## 安装
-
-将 Skill 目录复制到对应 Agent 工具的 skills 目录即可。以 Claude Code 和 Codex 为例：
-
-```bash
-# Claude Code
-mkdir -p ~/.claude/skills
-cp -R research-summary-skills/research-summary ~/.claude/skills/
-
-# Codex
-mkdir -p ~/.codex/skills
-cp -R research-summary-skills/research-summary ~/.codex/skills/
+```text
+skills/
+├── skills/                         # 可直接安装的 Skill
+│   ├── README.md                    # Skill 索引
+│   ├── research-summary/
+│   │   ├── SKILL.md
+│   │   ├── assets/
+│   │   └── references/
+│   └── study-examiner/
+│       ├── SKILL.md
+│       └── agents/
+├── docs/                            # 教程、案例和设计说明
+│   ├── installation.md               # npm 安装说明
+│   ├── skill-authoring.md
+│   ├── research-summary/
+│   └── study-examiner/
+├── bin/                             # ding-skills CLI 入口
+├── lib/                             # Agent 适配和安装逻辑
+└── README.md
 ```
 
-## Skill 结构说明
+## Skill 约定
 
-每个 Skill 遵循标准结构：
+每个 Skill 必须包含 `SKILL.md`，至少写清：
 
-| 文件 | 用途 |
-|---|---|
-| `SKILL.md` | 技能定义：触发条件、意图识别、执行流程、输出规范 |
-| `assets/` | 模板、配置等静态资源 |
-| `references/` | 参考规范：字段定义、分级标准、外部系统同步规则 |
+- 何时使用，以及不该使用的场景；
+- 所需输入和外部依赖；
+- 可重复执行的步骤；
+- 输出格式、验证方式和副作用；
+- 模板、参考规范等附属资源的用途。
 
-## 依赖
+详细规范见 [Skill 编写约定](docs/skill-authoring.md)。满足此目录和 front matter 约定的新 Skill 会被 `ding-skills list` 与 `install --all` 自动发现。
 
-- **Notion MCP 插件**（`makenotion/claude-code-notion-plugin`）：用于同步文档到 Notion
-- **WebSearch / WebFetch**：资料搜索与链接验证
+## 与 `coding-agent-engineering` 的关系
 
-## 贡献
+本仓库面向个人的学习、研究、写作与知识管理；[`coding-agent-engineering`](https://github.com/shixiaoding/coding-agent-engineering) 面向软件项目中的 Coding Agent 协作。
 
-欢迎提交新的 Skill 或改进现有 Skill。每个 Skill 需包含：
-- `SKILL.md` — 清晰定义触发条件、执行流程、输出格式
-- `assets/` — 文档模板等资源
-- `references/` — 尽量将可复用的规则/规范抽象到此目录
+```text
+skills                     我如何借助 Agent 完成个人高频工作
+coding-agent-engineering   Agent 如何按工程规则参与软件研发
+```
+
+团队工程规则、代码审查流程和项目级 Agent 约束不放入本仓库。
+
+## Roadmap
+
+- [x] `research-summary`：资料收集与资料库维护
+- [x] `study-examiner`：学习后的测验与精准补弱
+- [ ] 基于真实使用场景沉淀复盘或周报 Skill
+- [ ] 为稳定 Skill 补充可复现示例与维护记录
 
 ## License
 
