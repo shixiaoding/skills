@@ -1,6 +1,6 @@
 {
   "name": "@helloxiaoding/ding-skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "小鼎 Skills 的跨 Agent 安装工具。",
   "type": "module",
   "bin": {

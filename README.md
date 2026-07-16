@@ -1,8 +1,15 @@
-# Skills
+# 小鼎 Skills
 
-个人可复用的 AI Skills 与工作流库。
+让 AI Agent 帮你把资料学习转化为可检验、可分享的知识输出。
 
-这里沉淀的是已经在真实学习、研究、写作和知识管理场景中验证过的方法。每个 Skill 都应足够小，能够独立安装、理解和调整，而不是把整个个人工作系统塞进一份超长提示词。
+把资料收集、学习检验与知识输出沉淀为可组合的 Agent 工作流。
+
+这里收录已经在真实场景中验证过的个人 Skills。每个 Skill 都应足够小、可独立安装和调整；它们可以组合成工作流，但不会被堆成一套难以维护的“万能系统”。
+
+```text
+资料收集与整理  →  学习后的理解检验  →  学习输出写作  →  人工发布
+research-summary     study-examiner         规划中            由你确认
+```
 
 ## 当前 Skills
 
@@ -24,13 +31,16 @@ npx @helloxiaoding/ding-skills install study-examiner --agent codex
 
 # 将全部 Skill 安装到 Claude Code
 npx @helloxiaoding/ding-skills install --all --agent claude-code
+
+# 检查本机可用的 Agent 目录
+npx @helloxiaoding/ding-skills doctor
 ```
 
 支持 Codex、Claude Code、Qoder CLI 和 QoderWork。完整命令、覆盖规则和故障处理见 [安装手册](https://github.com/shixiaoding/skills/blob/main/docs/installation.md)。
 
-没有 Node.js 时，仍可克隆仓库后，将 `skills/<skill-name>/` 手动复制到所用 Agent 的 skills 目录。
+需要 Node.js 20+。没有 Node.js 时，仍可克隆仓库后，将 `skills/<skill-name>/` 手动复制到所用 Agent 的 skills 目录。
 
-## 使用示例
+## 使用方式
 
 安装 `research-summary` 后，可以直接说：
 
@@ -54,6 +64,8 @@ npx @helloxiaoding/ding-skills install --all --agent claude-code
 
 它会先围绕已提供的材料或明确主题进行测验；答题过程中不提前批改，全部答完后再统一复盘薄弱点。
 更多说明见 [study-examiner 使用教程](docs/study-examiner/usage.md)。
+
+学习输出写作是下一阶段方向：它会结合资料、答题复盘和目标读者，分别生成博文或小红书草稿。这个 Skill 尚未实现，也不会自动发布到外部平台；详见 [Roadmap](docs/roadmap.md)。
 
 ## 目录结构
 
@@ -101,13 +113,12 @@ coding-agent-engineering   Agent 如何按工程规则参与软件研发
 
 团队工程规则、代码审查流程和项目级 Agent 约束不放入本仓库。
 
-## Roadmap
+## 版本与规划
 
-- [x] `research-summary`：资料收集与资料库维护
-- [x] `study-examiner`：学习后的测验与精准补弱
-- [ ] 基于真实使用场景沉淀复盘或周报 Skill
-- [ ] 为稳定 Skill 补充可复现示例与维护记录
+- [Changelog](CHANGELOG.md)：已发布、影响使用者的变更。
+- [Roadmap](docs/roadmap.md)：下一步方向、边界与暂不做的能力。
+- 版本号遵循语义化版本：修复用 `0.1.1`，新增兼容能力用 `0.2.0`。
 
 ## License
 
-MIT
+MIT License — 可用于个人或商业场景，详见 [LICENSE](LICENSE)。
